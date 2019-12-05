@@ -1,0 +1,18 @@
+{
+  "npmScope": "online-cart",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "book-store-e2e": {
+      "tags": []
+    },
+    "book-store": {
+      "tags": []
+    }
+  }
+}
