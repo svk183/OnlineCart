@@ -1,0 +1,18 @@
+<form class="searchBook" (submit)="searchBooks()" #searchForm="ngForm" style="margin:auto;max-width:300px">
+    <input type="text" placeholder="Search Book.." name="searchField" ngModel #searchField="ngModel" searchField required/>
+    <button type="submit" >
+        <mat-icon>search</mat-icon>
+    </button>
+</form>
+
+<div class="grid-container" *ngIf="booksList.length">
+    <div *ngFor="let bookDetails of booksList">
+        <mat-card class="example-card">
+            <img mat-card-image [src]="bookDetails.imageLink" alt="{{bookDetails.title}}" />
+        </mat-card>
+    </div>
+</div>
+
+<div *ngIf="!booksList.length">
+    <p class="noBooks">No books to show</p>
+</div>

@@ -25,7 +25,10 @@
               "apps/book-store/src/favicon.ico",
               "apps/book-store/src/assets"
             ],
-            "styles": ["apps/book-store/src/styles.scss"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
+              "apps/book-store/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -84,7 +87,10 @@
               "apps/book-store/tsconfig.app.json",
               "apps/book-store/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/book-store/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/book-store/**"
+            ]
           }
         },
         "test": {
@@ -118,8 +124,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/book-store-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/book-store-e2e/**"]
+            "tsConfig": [
+              "apps/book-store-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/book-store-e2e/**"
+            ]
           }
         }
       }

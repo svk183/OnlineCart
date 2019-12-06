@@ -1,0 +1,20 @@
+<div class="header">
+    <button class="menuBtn" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+            <mat-icon>dashboard</mat-icon>
+            <span>Dashboard</span>
+        </button>
+        <button mat-menu-item>
+            <mat-icon>shopping_cart</mat-icon>
+            <span>Cart</span>
+        </button>
+        <button mat-menu-item>
+            <mat-icon>library_books</mat-icon>
+            <span>My Collection</span>
+        </button>
+    </mat-menu>
+    <a class="logo">EnLight</a>
+</div>  
