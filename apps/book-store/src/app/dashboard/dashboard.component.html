@@ -1,6 +1,6 @@
-<form class="searchBook" (submit)="searchBooks()" #searchForm="ngForm" style="margin:auto;max-width:300px">
+<form class="searchBook" (submit)="searchBooks(searchForm)" #searchForm="ngForm" style="margin:auto;max-width:300px">
     <input type="text" placeholder="Search Book.." name="searchField" ngModel #searchField="ngModel" searchField required/>
-    <button type="submit" >
+    <button>
         <mat-icon>search</mat-icon>
     </button>
 </form>
