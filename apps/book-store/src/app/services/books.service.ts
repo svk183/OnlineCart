@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from './../../environments/environment';
 import { map } from 'rxjs/operators';
+
+import { environment } from './../../environments/environment';
 import { Book } from '../models/book';
 
 @Injectable({
@@ -30,6 +31,11 @@ export class BooksService {
         } else {
           return [];
         }
+      }),
+      map( ( res: Book[] ) => {
+        return res.filter( item => {
+          return (item.imageLink !== '' && item.price !== 0 ) ? true : false
+        });
       })
     );
   }
