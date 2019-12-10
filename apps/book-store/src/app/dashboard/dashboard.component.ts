@@ -1,8 +1,17 @@
-import { Book } from './../models/book';
+//Angular Imports
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
+// NGRX / Redux Imports
+import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+
+// Redux( Actions / Reducers ) Imports
+import { ChangeBooks, FetchBooks } from '../redux/actions/books.actions';
+
+// Our Components, Services, Models
+import { Book } from './../models/book';
 import { BooksService } from '../services/books.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'online-cart-dashboard',
@@ -13,22 +22,32 @@ export class DashboardComponent implements OnInit {
   public booksList: Book[];
   public recentSearchs: string[];
 
-  constructor( private booksAPIService: BooksService ) { }
+  private booksListObs: Observable<Book[]>;
+  private booksFetchObs: Observable<any>;
+
+  constructor( private store: Store<{booksList: Book[], apiError: any}> ) {}
 
   ngOnInit() {
-    this.booksList = [];
+    this.booksListObs = this.store.pipe(select('booksList'));
+    this.booksFetchObs = this.store.select('apiError');
+
+    this.booksListObs.subscribe( ( newBooksList: Book[] ) => {
+      this.booksList = newBooksList;
+    });
+    this.booksFetchObs.subscribe( ( errMessage ) => {
+      // Show error popup to user
+      if( errMessage != null ) {
+        alert('Error in fetching books data');
+      }
+    });
   }
 
   searchBooks( form: NgForm ) {
     if( form.valid ){
       this.booksList = [];
 
-      this.booksAPIService.getBooks( form.value.searchField )
-      .subscribe( ( response : Book[] ) => {
-        this.booksList = response
-      }, ( err ) => {
-        alert("Failed to fetch searched books");
-      } );
+      const fetchAction = new FetchBooks( form.value.searchField );
+      this.store.dispatch( fetchAction );
     } else {
       alert("Please enter a valid search text");
     }
