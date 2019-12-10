@@ -7,11 +7,10 @@ import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 
 // Redux( Actions / Reducers ) Imports
-import { ChangeBooks, FetchBooks } from '../redux/actions/books.actions';
+import { FetchBooks } from '../redux/actions/books.actions';
 
 // Our Components, Services, Models
 import { Book } from './../models/book';
-import { BooksService } from '../services/books.service';
 
 @Component({
   selector: 'online-cart-dashboard',

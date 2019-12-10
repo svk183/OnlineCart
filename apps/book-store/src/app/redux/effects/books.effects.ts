@@ -1,13 +1,16 @@
+// Angular Modules
 import { Injectable } from '@angular/core';
 
+// RXJS/NGRX Modules
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { map, mergeMap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
+// Dev Defined Services/Models/Actions
 import { BooksService } from '../../services/books.service';
 import { BooksActionTypes, FetchBooks } from '../actions/books.actions';
-import { map, mergeMap, catchError } from 'rxjs/operators';
 import { Book } from '../../models/book';
-import { of } from 'rxjs';
-import { ErrorEnums, APIErrorAction } from '../actions/apiError.actions';
+import { APIErrorAction } from '../actions/apiError.actions';
 
 @Injectable()
 export class BooksEffects {
