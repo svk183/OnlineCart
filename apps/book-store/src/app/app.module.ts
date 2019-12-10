@@ -11,6 +11,7 @@ import { AngularMaterialsModule } from './angular-materials/angular-materials.mo
 
 // Redux related Modules, Reducers, Effects
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { BooksListReducer } from './redux/reducers/books.reducer';
 import { APIErrorReducer } from './redux/reducers/apiError.reducer';
@@ -20,18 +21,20 @@ import { BooksEffects } from './redux/effects/books.effects';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { environment } from './../environments/environment.prod';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, DashboardComponent],
   imports: [
-            BrowserModule,
+          BrowserModule,
             HttpClientModule,
             RoutingModule, 
             FormsModule,
             NoopAnimationsModule, 
             AngularMaterialsModule,
             StoreModule.forRoot({ booksList: BooksListReducer, apiError: APIErrorReducer}),
-            EffectsModule.forRoot([BooksEffects])
+            EffectsModule.forRoot([BooksEffects]),
+            environment.production ? StoreDevtoolsModule.instrument() : []
           ],
   providers: [],
   bootstrap: [AppComponent]
