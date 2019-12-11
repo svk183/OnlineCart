@@ -21,7 +21,10 @@ import { BooksEffects } from './redux/effects/books.effects';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+
+// Environment varibles
 import { environment } from './../environments/environment.prod';
+import { SearchReducer } from './redux/reducers/search.reducer';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, DashboardComponent],
@@ -32,7 +35,11 @@ import { environment } from './../environments/environment.prod';
             FormsModule,
             NoopAnimationsModule, 
             AngularMaterialsModule,
-            StoreModule.forRoot({ booksList: BooksListReducer, apiError: APIErrorReducer}),
+            StoreModule.forRoot({ 
+                                  booksList: BooksListReducer,
+                                  apiError: APIErrorReducer,
+                                  searchList: SearchReducer
+                                }),
             EffectsModule.forRoot([BooksEffects]),
             environment.production ? StoreDevtoolsModule.instrument() : []
           ],
