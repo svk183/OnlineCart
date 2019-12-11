@@ -8,10 +8,10 @@ import { Store, select } from '@ngrx/store';
 
 // Redux( Actions / Reducers ) Imports
 import { FetchBooks } from '../redux/actions/books.actions';
+import { AddToSearchListAction } from '../redux/actions/search.actions';
 
 // Our Components, Services, Models
 import { Book } from './../models/book';
-import { AddToSearchListAction } from '../redux/actions/search.actions';
 
 @Component({
   selector: 'online-cart-dashboard',
@@ -26,14 +26,16 @@ export class DashboardComponent implements OnInit {
   // Observers for redux events
   private booksListObs: Observable<Book[]>;
   private booksFetchObs: Observable<any>;
+  private cartObs: Observable<Book>;
 
-  constructor( private store: Store<{booksList: Book[], apiError: any}> ) {}
+  constructor( private store: Store<{booksList: Book[], apiError: any, cartList: any}> ) {}
 
   ngOnInit() {
     // initialising redux data change listerners(Observers)
     this.booksListObs = this.store.pipe(select('booksList'));
     this.booksFetchObs = this.store.select('apiError');
-    
+    this.cartObs = this.store.select('cartList');
+
     // Subscribers for redux data changes
     this.booksListObs.subscribe( ( newBooksList: Book[] ) => {
       this.booksList = newBooksList;
@@ -43,6 +45,9 @@ export class DashboardComponent implements OnInit {
       if( errMessage != null ) {
         alert('Error in fetching books data');
       }
+    });
+    this.cartObs.subscribe( data => {
+      // console.log( data );
     });
   }
 

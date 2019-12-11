@@ -16,6 +16,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { BooksListReducer } from './redux/reducers/books.reducer';
 import { APIErrorReducer } from './redux/reducers/apiError.reducer';
 import { BooksEffects } from './redux/effects/books.effects';
+import { SearchReducer } from './redux/reducers/search.reducer';
+import { cartReducer } from './redux/reducers/cart.reducer';
 
 // Dev Defined Components
 import { AppComponent } from './app.component';
@@ -24,7 +26,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 // Environment varibles
 import { environment } from './../environments/environment.prod';
-import { SearchReducer } from './redux/reducers/search.reducer';
+import { reducerMapper } from './redux/reducers/mapper';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, DashboardComponent],
@@ -35,11 +37,7 @@ import { SearchReducer } from './redux/reducers/search.reducer';
             FormsModule,
             NoopAnimationsModule, 
             AngularMaterialsModule,
-            StoreModule.forRoot({ 
-                                  booksList: BooksListReducer,
-                                  apiError: APIErrorReducer,
-                                  searchList: SearchReducer
-                                }),
+            StoreModule.forRoot(reducerMapper),
             EffectsModule.forRoot([BooksEffects]),
             environment.production ? StoreDevtoolsModule.instrument() : []
           ],
