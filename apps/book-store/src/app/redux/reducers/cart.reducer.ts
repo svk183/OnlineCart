@@ -28,14 +28,3 @@ export function cartReducer( state = initialState, action: CartAction) {
             return state;
     }
 }
-
-// Create the default selectors
-
-export const getCartState = createFeatureSelector<CartState>('cart');
-
-export const {
-    selectIds,
-    selectEntities,
-    selectAll,
-    selectTotal,
-  } = cartAdapter.getSelectors(getCartState);

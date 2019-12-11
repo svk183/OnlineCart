@@ -13,11 +13,8 @@ import { AngularMaterialsModule } from './angular-materials/angular-materials.mo
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { BooksListReducer } from './redux/reducers/books.reducer';
-import { APIErrorReducer } from './redux/reducers/apiError.reducer';
 import { BooksEffects } from './redux/effects/books.effects';
-import { SearchReducer } from './redux/reducers/search.reducer';
-import { cartReducer } from './redux/reducers/cart.reducer';
+import { reducerMapper } from './redux/reducers/mapper';
 
 // Dev Defined Components
 import { AppComponent } from './app.component';
@@ -26,12 +23,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 // Environment varibles
 import { environment } from './../environments/environment.prod';
-import { reducerMapper } from './redux/reducers/mapper';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, DashboardComponent],
   imports: [
-          BrowserModule,
+            BrowserModule,
             HttpClientModule,
             RoutingModule, 
             FormsModule,
