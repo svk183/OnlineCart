@@ -23,9 +23,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 // Environment varibles
 import { environment } from './../environments/environment.prod';
+import { BookDetailsComponent } from './book-details/book-details.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, DashboardComponent],
+  declarations: [AppComponent, HeaderComponent, DashboardComponent, BookDetailsComponent],
   imports: [
             BrowserModule,
             HttpClientModule,

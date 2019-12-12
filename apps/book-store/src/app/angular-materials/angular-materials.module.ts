@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 
 // Angular Materials Module
-import { MatMenuModule, MatIconModule, MatCardModule } from '@angular/material';
+import { MatMenuModule, MatIconModule, MatCardModule, MatButtonModule } from '@angular/material';
 
 @NgModule({
   declarations: [],
@@ -12,6 +12,7 @@ import { MatMenuModule, MatIconModule, MatCardModule } from '@angular/material';
     MatMenuModule, 
     MatIconModule, 
     MatCardModule,
+    MatButtonModule
   ]
 })
 export class AngularMaterialsModule { }

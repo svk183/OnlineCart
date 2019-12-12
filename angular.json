@@ -26,7 +26,7 @@
               "apps/book-store/src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "apps/book-store/src/styles.scss"
             ],
             "scripts": []

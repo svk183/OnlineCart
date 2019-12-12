@@ -26,15 +26,17 @@ export class DashboardComponent implements OnInit {
   // Observers for redux events
   private booksListObs: Observable<Book[]>;
   private booksFetchObs: Observable<any>;
-  private cartObs: Observable<Book>;
+  private cartObs: Observable<Book[]>;
+  private searchListObs: Observable<string[]>;
 
-  constructor( private store: Store<{booksList: Book[], apiError: any, cartList: any}> ) {}
+  constructor( private store: Store<{booksList: Book[], apiError: any, cartList: any, searchList: string[]}> ) {}
 
   ngOnInit() {
     // initialising redux data change listerners(Observers)
     this.booksListObs = this.store.pipe(select('booksList'));
     this.booksFetchObs = this.store.select('apiError');
     this.cartObs = this.store.select('cartList');
+    this.searchListObs = this.store.select('searchList');
 
     // Subscribers for redux data changes
     this.booksListObs.subscribe( ( newBooksList: Book[] ) => {
@@ -45,6 +47,9 @@ export class DashboardComponent implements OnInit {
       if( errMessage != null ) {
         alert('Error in fetching books data');
       }
+    });
+    this.searchListObs.subscribe( ( searchList ) => {
+      this.recentSearchs = searchList;
     });
     this.cartObs.subscribe( data => {
       // console.log( data );

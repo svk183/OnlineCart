@@ -1,12 +1,12 @@
 <form class="searchBook" (submit)="searchBooks(searchForm)" #searchForm="ngForm" style="margin:auto;max-width:300px">
-    <input type="text" placeholder="Search Book.." name="searchField" ngModel #searchField="ngModel" searchField required/>
+    <input type="text" [placeholder]="recentSearchs && recentSearchs.length ? recentSearchs[recentSearchs.length - 1] : 'Search Book..'" name="searchField" ngModel #searchField="ngModel" searchField required/>
     <button>
         <mat-icon>search</mat-icon>
     </button>
 </form>
 
 <div class="grid-container" *ngIf="booksList.length">
-    <div *ngFor="let bookDetails of booksList">
+    <div *ngFor="let bookDetails of booksList" routerLink='bookdetails/{{ bookDetails.id }}'>
         <mat-card class="example-card">
             <img mat-card-image [src]="bookDetails.imageLink" alt="{{bookDetails.title}}" />
         </mat-card>
