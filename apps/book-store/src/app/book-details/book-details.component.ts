@@ -1,5 +1,5 @@
 // Angular Modules
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 // Redux Modules/Imports
@@ -15,7 +15,7 @@ import { Book } from '../models/book';
   templateUrl: './book-details.component.html',
   styleUrls: ['./book-details.component.scss']
 })
-export class BookDetailsComponent implements OnInit {
+export class BookDetailsComponent implements OnInit, OnDestroy {
   // fields to book details and cart status
   public bookDetails: Book;
   private books: Book[];
@@ -24,8 +24,8 @@ export class BookDetailsComponent implements OnInit {
   public itemBought: boolean;
 
   // redux Obbservables
-  private booksListObs: Observable<Book[]>;
-  private cartObjObs: Observable<Book[]>;
+  private booksListObs: any;
+  private cartObjObs: any;
 
   constructor( private store: Store<{booksList: Book[], cartList: any}>,
                private route: ActivatedRoute,
@@ -33,17 +33,14 @@ export class BookDetailsComponent implements OnInit {
 
   ngOnInit() {
     // Local fields initialization
-    this.booksListObs = this.store.select('booksList');
-    this.cartObjObs = this.store.select('cartList');
-    this.itemBought = false;
-
-    this.booksListObs.subscribe( ( booksList ) => {
+    this.booksListObs = this.store.select('booksList').subscribe( ( booksList ) => {
       this.books = booksList;
-    });
-
-    this.cartObjObs.subscribe( ( cartList ) => {
+    });;
+    this.cartObjObs = this.store.select('cartList').subscribe( ( cartList ) => {
       this.cartList = cartList;    
     });
+    
+    this.itemBought = false;
 
     // Fetching Id from URL
     this.route.paramMap
@@ -93,4 +90,8 @@ export class BookDetailsComponent implements OnInit {
     this.checkItemExistsInCart();
   }
 
+  ngOnDestroy() {
+    this.booksListObs.unsubscribe();
+    this.cartObjObs.unsubscribe();
+  }
 }

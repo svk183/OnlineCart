@@ -28,3 +28,25 @@ export function cartReducer( state = initialState, action: CartAction) {
             return state;
     }
 }
+
+export const getCartState = createFeatureSelector<CartState>('cartList');
+
+// get the selectors
+const {
+    selectIds,
+    selectEntities,
+    selectAll,
+    selectTotal,
+  } = cartAdapter.getSelectors( getCartState );
+   
+  // select the array of cart ids
+  export const selectCartIds = selectIds;
+   
+  // select the dictionary of cart entities
+  export const selectCartEntities = selectEntities;
+   
+  // select the array of cart items
+  export const selectAllCartItems = selectAll;
+   
+  // select the total cart count
+  export const selectCartTotal = selectTotal;
