@@ -13,6 +13,14 @@ const routes: Routes = [
   {
     path: 'bookdetails/:bookId',
     component: BookDetailsComponent
+  },
+  {
+    path: 'cart',
+    loadChildren: './../cart/cart.module#CartModule'
+  },
+  {
+    path: 'mycollection',
+    loadChildren: './../collection/collection.module#CollectionModule'
   }
 ]
 
