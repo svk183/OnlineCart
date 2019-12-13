@@ -1,17 +1,22 @@
+// Angular Modules
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
+// Components used in routing
 import { DashboardComponent } from './../dashboard/dashboard.component';
 import { BookDetailsComponent } from './../book-details/book-details.component';
 
+// environment varibles 
+import { environment } from './../../environments/environment';
+
+// Apps main routes mapping
 const routes: Routes = [
   {
     path: '',
     component: DashboardComponent
   },
   {
-    path: 'bookdetails/:bookId',
+    path: `bookdetails/:${environment.urlParams["bookdetails#"]}`,
     component: BookDetailsComponent
   },
   {
@@ -27,7 +32,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
     RouterModule.forRoot(routes)
   ],
   exports: [RouterModule]

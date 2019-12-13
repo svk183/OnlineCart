@@ -15,3 +15,12 @@ export const reducerMapper: ActionReducerMap<any> = {
     myCollection: MyCollectionReducer,
     addressList: AddressReducer
 }
+
+export enum ReduceMappers {
+    booksList = 'booksList',
+    apiError = 'apiError',
+    searchList = 'searchList',
+    cartList = 'cartList',
+    myCollection = 'myCollection',
+    addressList = 'addressList'
+}

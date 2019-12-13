@@ -3,12 +3,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 // Redux Modules/Imports
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AddBookToCartAction, RemoveBookFromCartAction } from '../redux/actions/cart.actions';
 
-// Dev Modles
+// Dev Models and Enums
 import { Book } from '../models/book';
+import { ReduceMappers } from '../redux/reducers/mapper';
+
+// environment details
+import { environment } from './../../environments/environment';
 
 @Component({
   selector: 'online-cart-book-details',
@@ -16,27 +19,30 @@ import { Book } from '../models/book';
   styleUrls: ['./book-details.component.scss']
 })
 export class BookDetailsComponent implements OnInit, OnDestroy {
-  // fields to book details and cart status
-  public bookDetails: Book;
+  // Private varibles to implement functionality
   private books: Book[];
   private selectdBookId: string;
   private cartList: any;
+
+  // Varibles used in HTML
+  public bookDetails: Book;
   public itemBought: boolean;
 
   // redux Obbservables
-  private booksListObs: any;
-  private cartObjObs: any;
+  private booksListSub: any;
+  private cartObjSub: any;
 
-  constructor( private store: Store<{booksList: Book[], cartList: any}>,
+  // activate route to fetch params from URL, router to redirect to other URLs
+  constructor( private store: Store<{ booksList: Book[], cartList: any  }>,
                private route: ActivatedRoute,
                private router: Router ) { }
 
   ngOnInit() {
     // Local fields initialization
-    this.booksListObs = this.store.select('booksList').subscribe( ( booksList ) => {
+    this.booksListSub = this.store.select(ReduceMappers.booksList).subscribe( ( booksList ) => {
       this.books = booksList;
     });;
-    this.cartObjObs = this.store.select('cartList').subscribe( ( cartList ) => {
+    this.cartObjSub = this.store.select(ReduceMappers.cartList).subscribe( ( cartList ) => {
       this.cartList = cartList;    
     });
     
@@ -45,8 +51,9 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     // Fetching Id from URL
     this.route.paramMap
     .subscribe( params => {
-      this.selectdBookId = params.get('bookId');
+      this.selectdBookId = params.get( environment.urlParams["bookdetails#"] );
 
+      // Fetching selected book details
       if( this.selectdBookId ) {
         this.books.forEach( ( bookData ) => {
           if( bookData.id === this.selectdBookId ){
@@ -64,6 +71,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Checking if book already exists in cart or not
   checkItemExistsInCart(){
     if( this.selectdBookId ) {
       this.itemBought = this.cartList.ids.some( ( id ) => {
@@ -73,12 +81,19 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   // Adding item to cart
-  AddBookToCart(){
+  addBookToCart(){
     const cartAction = new AddBookToCartAction( this.bookDetails );
 
     this.store.dispatch( cartAction );
 
     this.checkItemExistsInCart();
+  }
+
+  // Adding book to cart and redirecting user to cart
+  buyNow(){
+    this.addBookToCart();
+
+    this.router.navigate(['/cart']);
   }
 
   // removing item from cart
@@ -91,7 +106,8 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.booksListObs.unsubscribe();
-    this.cartObjObs.unsubscribe();
+    // Unsubscribing redux subscribers
+    this.booksListSub.unsubscribe();
+    this.cartObjSub.unsubscribe();
   }
 }

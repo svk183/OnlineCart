@@ -18,7 +18,8 @@
       <p>Authors: {{ bookDetails.authors.join(',') }}</p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="AddBookToCart()" [disabled]="itemBought"> {{ itemBought == true ? 'Added To Cart' : 'Add To Cart' }}</button>
+      <button mat-raised-button color="primary" (click)="addBookToCart()" [disabled]="itemBought"> {{ itemBought == true ? 'Added To Cart' : 'Add To Cart' }}</button>
+      <button mat-raised-button color="accent" (click)="buyNow()">Buy Now</button>
       <button mat-raised-button (click)="removeBookFromCart()" [disabled]="!itemBought">Remove</button>
     </mat-card-actions>
   </mat-card>
