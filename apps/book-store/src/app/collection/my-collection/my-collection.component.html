@@ -1,1 +1,19 @@
 <h2 style="padding-top: 50px;text-align: center;">My Collection</h2>
+
+<mat-card *ngIf="!collectionBooks.length">
+  No Books Added to Collection!
+</mat-card>
+
+<mat-accordion *ngIf="collectionBooks.length">
+  <mat-expansion-panel *ngFor="let bookDetails of collectionBooks">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ bookDetails.title }}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{ bookDetails.authors }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>Publisher: {{ bookDetails.publisher }}</p>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -4,6 +4,7 @@ import { Book } from '../../models/book';
 
 export enum MyCollectionActionTypes {
     Add = '[Collection] Add',
+    AddMultiple = '[Collection] AddMultiple',
     Remove = '[Collection] Remove',
     Update = '[Collection] Update'
 }
@@ -11,6 +12,7 @@ export enum MyCollectionActionTypes {
 export class MyCollectionAction implements Action {
     readonly type;
     newBook?: Book;
+    multipleBooks?: Book[];
     id?: string;
 }
 
@@ -18,6 +20,12 @@ export class AddToCollectionAction implements MyCollectionAction {
     readonly type = MyCollectionActionTypes.Add;
 
     constructor( public newBook: Book ) {}
+}
+
+export class AddMultipleToCollectionAction implements MyCollectionAction {
+    readonly type = MyCollectionActionTypes.AddMultiple;
+
+    constructor( public multipleBooks: Book[] ) {}
 }
 
 export class UpdateCollectionAction implements MyCollectionAction {

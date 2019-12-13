@@ -24,6 +24,8 @@ export function cartReducer( state = initialState, action: CartAction) {
             }, state );
         case CartActionTypes.Remove:
             return cartAdapter.removeOne( action.id, state );
+        case CartActionTypes.RemoveAll:
+            return cartAdapter.removeAll( state );
         default:
             return state;
     }
