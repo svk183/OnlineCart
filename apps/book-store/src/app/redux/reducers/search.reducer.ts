@@ -1,3 +1,4 @@
+// Dev defined actions
 import { SearchAction, SearchActionTypes } from '../actions/search.actions';
 
 const initialState = [];

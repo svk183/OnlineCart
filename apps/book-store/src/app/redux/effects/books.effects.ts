@@ -6,19 +6,23 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-// Dev Defined Services/Models/Actions
+// Dev Defined Services/Actions
 import { BooksService } from '../../services/books.service';
 import { BooksActionTypes, FetchBooks } from '../actions/books.actions';
-import { Book } from '../../models/book';
 import { APIErrorAction } from '../actions/apiError.actions';
+
+// Dev Models
+import { Book } from '../../models/book';
 
 @Injectable()
 export class BooksEffects {
+    // Creating an effect mapping to BooksActionTypes.Fetch
     fetchBooks = createEffect( () =>
         this.actions.pipe(
             ofType(BooksActionTypes.Fetch),
             mergeMap( ( action: FetchBooks ) =>
                 this.booksService.getBooks(action.payload).pipe(
+                    // Mapping google response to local Book Model
                     map( ( res: any ) => {
                         if( res && res.items ) {
                             return res.items.map( ( obj: any ) => {
@@ -36,12 +40,15 @@ export class BooksEffects {
                             throw new Error( res );
                         }
                     }),
+                    // Removing all invalid books from the response
                     map( ( res: Book[] ) => {
                         return res.filter( item => {
                             return (item.imageLink !== '' && item.price !== 0 ) ? true : false
                         });
                     }),
+                    // Calling Books Action
                     map( response => ( {type: BooksActionTypes.Change, payload: response })),
+                    // Calling API response Action
                     catchError( ( errRes ) => {
                         const fetchError = new APIErrorAction( errRes );
                         return of(fetchError);

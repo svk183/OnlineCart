@@ -1,5 +1,7 @@
+// Angular redux modules
 import { Action } from '@ngrx/store';
 
+// Dev Models
 import { Book } from '../../models/book';
 
 export enum CartActionTypes {

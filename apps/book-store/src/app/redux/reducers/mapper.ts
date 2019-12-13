@@ -1,5 +1,7 @@
+// Angular Redux Modules
 import { ActionReducerMap } from '@ngrx/store';
 
+// Dev Defienied Reducers
 import { BooksListReducer } from './books.reducer';
 import { APIErrorReducer } from './apiError.reducer';
 import { SearchReducer } from './search.reducer';
@@ -16,6 +18,7 @@ export const reducerMapper: ActionReducerMap<any> = {
     addressList: AddressReducer
 }
 
+// Add enums when we add new maapper in reducerMapper
 export enum ReduceMappers {
     booksList = 'booksList',
     apiError = 'apiError',

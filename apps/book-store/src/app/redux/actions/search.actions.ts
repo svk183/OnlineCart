@@ -1,3 +1,4 @@
+// Angular Redux Store Module
 import { Action } from '@ngrx/store';
 
 export enum SearchActionTypes {

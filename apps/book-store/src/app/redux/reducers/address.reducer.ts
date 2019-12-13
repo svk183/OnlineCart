@@ -1,5 +1,5 @@
-import { Address, AddressAction, AddressActionTypes } from '../actions/address.actions';
-
+// Dev Defined actions
+import { AddressAction, AddressActionTypes } from '../actions/address.actions';
 
 const initialState = [];
 

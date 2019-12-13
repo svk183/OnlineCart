@@ -10,12 +10,13 @@ import { Store } from '@ngrx/store';
 import { RemoveBookFromCartAction, RemoveAllBooksFromCartAction } from '../../redux/actions/cart.actions';
 import { selectAllCartItems } from '../../redux/reducers/cart.reducer';
 import { AddMultipleToCollectionAction } from '../../redux/actions/mycollection.actions';
-import { Address, UpdateAddressAction } from '../../redux/actions/address.actions';
+import { UpdateAddressAction } from '../../redux/actions/address.actions';
 import { selectAllCollectionItems } from '../../redux/reducers/mycollection.reducer';
 
 // Dev Models and Enums
 import { Book } from '../../models/book';
 import { ReduceMappers } from '../../redux/reducers/mapper';
+import { Address } from '../../models/address';
 
 @Component({
   selector: 'online-cart-my-cart',

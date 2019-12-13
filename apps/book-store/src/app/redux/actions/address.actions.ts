@@ -1,11 +1,8 @@
+// Redux store
 import { Action } from '@ngrx/store';
 
-export interface Address {
-    id: number;
-    name: string;
-    mobileNo: number;
-    address: string;
-}
+// Dev Models
+import { Address } from '../../models/address';
 
 export enum AddressActionTypes {
     Add = '[Address] Add',
