@@ -30,6 +30,8 @@ export class MyCartComponent implements OnInit, OnDestroy {
   public name: string;
   public mobileNo: number;
   public address: string;
+  public cartValue: number;
+
   // Varibles used in component only
   private clearCartDetails: boolean;
   private existingAddress: Address;
@@ -48,6 +50,8 @@ export class MyCartComponent implements OnInit, OnDestroy {
 
     this.cartSub = this.store.select(selectAllCartItems).subscribe( ( cartData ) => {
       this.cartDetails = cartData;
+
+      this.calculateCartValue();
     });
     this.collectionSub = this.store.select(selectAllCollectionItems).subscribe( () => {
       if( this.clearCartDetails === true ) {
@@ -71,6 +75,13 @@ export class MyCartComponent implements OnInit, OnDestroy {
     });
 
     this.expandAddressBlock = false;
+  }
+
+  // calculating sum of cart items price
+  calculateCartValue() {
+    this.cartValue = this.cartDetails.reduce( ( totalValue, cartObj ) => {
+      return totalValue + cartObj.price;
+    }, 0);
   }
 
   // Removes book from cart
