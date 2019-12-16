@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // Fields used in component UI
   public booksList: Book[];
   public recentSearchs: string[];
+  public errorMessage: string;
 
   // Observers for redux events
   private booksListObs: Subscription;
@@ -36,14 +37,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
                                     }> ) {}
   
   ngOnInit() {
+    this.errorMessage = '';
+
     // initialising redux data change listerners(Observers)
     this.booksListObs = this.store.pipe(select(ReduceMappers.booksList)).subscribe( ( newBooksList: Book[] ) => {
-      this.booksList = newBooksList;
-    });;
+      this.booksList = newBooksList;      
+    });
     this.booksFetchObs = this.store.select(ReduceMappers.apiError).subscribe( ( errMessage ) => {
       // Show error popup to user
       if( errMessage != null ) {
-        alert('Error in fetching books data');
+        this.errorMessage = 'Error in fetching books data';
       }
     });
     this.cartObs = this.store.select(ReduceMappers.cartList).subscribe( () => {
@@ -57,6 +60,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // function used to get the books searched by user
   searchBooks( form: NgForm ) {
     if( form.valid ){
+      this.errorMessage = '';
       this.booksList = [];
 
       // calling search action to store all the search list
@@ -67,7 +71,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       const fetchAction = new FetchBooks( form.value.searchField );
       this.store.dispatch( fetchAction );
     } else {
-      alert("Please enter a valid search text");
+      this.errorMessage = "Please enter a valid search text";
     }
   }
 
