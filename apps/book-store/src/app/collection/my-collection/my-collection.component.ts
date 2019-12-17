@@ -26,7 +26,7 @@ export class MyCollectionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Fetching collection details from store
     this.collectionSub = this.store.select( selectAllCollectionItems ).subscribe( ( collectionData ) => {
-      this.collectionBooks = collectionData;
+      this.collectionBooks = collectionData;      
     });
   }
 

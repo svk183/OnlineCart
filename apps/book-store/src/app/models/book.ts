@@ -1,3 +1,5 @@
+import { Address } from './address';
+
 export interface Book {
     id: string;
     title: string;
@@ -7,4 +9,5 @@ export interface Book {
     imageLink: string;
     price: number;
     currency: string;
+    deliveryAddress?: Address;
 }

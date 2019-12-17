@@ -104,10 +104,6 @@ export class MyCartComponent implements OnInit, OnDestroy {
 
       this.clearCartDetails = true;
 
-      const collectionAction = new AddMultipleToCollectionAction( this.cartDetails );
-
-      this.store.dispatch( collectionAction );
-
       if( !this.existingAddress ) {
         this.existingAddress = {
                                   name: '',
@@ -121,6 +117,15 @@ export class MyCartComponent implements OnInit, OnDestroy {
       this.existingAddress.name = this.name;
       this.existingAddress.mobileNo = this.mobileNo;
       this.existingAddress.address = this.address;
+
+      this.cartDetails = this.cartDetails.map( ( bookItem ) => {
+        bookItem.deliveryAddress = Object.assign( {}, this.existingAddress );
+        return bookItem;
+      });
+      
+      const collectionAction = new AddMultipleToCollectionAction( this.cartDetails );
+
+      this.store.dispatch( collectionAction );
 
       const updateAddressAction = new UpdateAddressAction( this.existingAddress );
       this.store.dispatch( updateAddressAction );
