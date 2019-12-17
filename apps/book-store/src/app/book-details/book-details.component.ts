@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 // Redux Modules/Imports
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { AddBookToCartAction, RemoveBookFromCartAction } from '../redux/actions/cart.actions';
+import { selectCollectionIds } from '../redux/reducers/mycollection.reducer';
 
 // Dev Models and Enums
 import { Book } from '../models/book';
@@ -27,10 +29,12 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   // Varibles used in HTML
   public bookDetails: Book;
   public itemBought: boolean;
+  public collectionIds: string[] | number[];
 
   // redux Obbservables
-  private booksListSub: any;
-  private cartObjSub: any;
+  private booksListSub: Subscription;
+  private cartObjSub: Subscription;
+  private collectionSub: Subscription;
 
   // activate route to fetch params from URL, router to redirect to other URLs
   constructor( private store: Store<{ booksList: Book[], cartList: any  }>,
@@ -44,6 +48,9 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     });;
     this.cartObjSub = this.store.select(ReduceMappers.cartList).subscribe( ( cartList ) => {
       this.cartList = cartList;    
+    });
+    this.collectionSub = this.store.select( selectCollectionIds ).subscribe( ( ids ) => {
+      this.collectionIds = ids;
     });
     
     this.itemBought = false;
@@ -109,5 +116,6 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     // Unsubscribing redux subscribers
     this.booksListSub.unsubscribe();
     this.cartObjSub.unsubscribe();
+    this.collectionSub.unsubscribe();
   }
 }

@@ -15,13 +15,13 @@
                 <div class="card-body">
                     <!-- <h4 class="card-title" style="font-size: 16px; font-weight: 600;">{{ bookDetails.title }}</h4> -->
                     <p class="card-text">Price: {{ bookDetails.price | currency }}</p>
-                    <a routerLink='bookdetails/{{ bookDetails.id }}' class="btn btn-primary">See Details</a>
+                    <a routerLink='bookdetails/{{ bookDetails.id }}' class="btn btn-primary"> {{ collectionIds.includes( bookDetails.id ) ? 'In Collection' : (cartItemIds.indexOf( bookDetails.id ) > -1 ? 'Added To Cart' : 'View Details') }}</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div *ngIf="!booksList.length">
+    <div *ngIf="recentSearchs.length && !booksList.length">
         <p class="noBooks">No books to show</p>
     </div>
     

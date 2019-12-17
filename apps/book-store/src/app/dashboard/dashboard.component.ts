@@ -9,6 +9,8 @@ import { Store, select } from '@ngrx/store';
 // Redux( Actions / Reducers ) Imports
 import { FetchBooks } from '../redux/actions/books.actions';
 import { AddToSearchListAction } from '../redux/actions/search.actions';
+import { selectCartIds } from '../redux/reducers/cart.reducer';
+import { selectCollectionIds } from '../redux/reducers/mycollection.reducer';
 
 // Dev Models and Enums
 import { Book } from './../models/book';
@@ -24,12 +26,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public booksList: Book[];
   public recentSearchs: string[];
   public errorMessage: string;
+  public cartItemIds: string[] | number[];
+  public collectionIds: string[] | number[];
 
   // Observers for redux events
-  private booksListObs: Subscription;
-  private booksFetchObs: Subscription;
-  private cartObs: Subscription;
-  private searchListObs: Subscription;
+  private booksListSub: Subscription;
+  private booksFetchSub: Subscription;
+  private cartSub: Subscription;
+  private searchListSub: Subscription;
+  private collectionSub: Subscription;
 
   constructor( private store: Store<{ booksList: Book[],
                                       apiError: any, cartList: any,
@@ -40,20 +45,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.errorMessage = '';
 
     // initialising redux data change listerners(Observers)
-    this.booksListObs = this.store.pipe(select(ReduceMappers.booksList)).subscribe( ( newBooksList: Book[] ) => {
+    this.booksListSub = this.store.pipe(select(ReduceMappers.booksList)).subscribe( ( newBooksList: Book[] ) => {
       this.booksList = newBooksList;      
     });
-    this.booksFetchObs = this.store.select(ReduceMappers.apiError).subscribe( ( errMessage ) => {
+    this.booksFetchSub = this.store.select(ReduceMappers.apiError).subscribe( ( errMessage ) => {
       // Show error popup to user
       if( errMessage != null ) {
         this.errorMessage = 'Error in fetching books data';
       }
     });
-    this.cartObs = this.store.select(ReduceMappers.cartList).subscribe( () => {
-      // console.log( data );
+    this.cartSub = this.store.select(selectCartIds).subscribe( ( ids ) => {
+      this.cartItemIds = ids;
     });
-    this.searchListObs = this.store.select(ReduceMappers.searchList).subscribe( ( searchList ) => {
+    this.searchListSub = this.store.select(ReduceMappers.searchList).subscribe( ( searchList ) => {
       this.recentSearchs = searchList;
+    });
+    this.collectionSub = this.store.select( selectCollectionIds ).subscribe( ( ids ) => {
+      this.collectionIds = ids;
     });
   }
 
@@ -77,10 +85,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // Unsubscribing all redux subscriptions
-    this.booksListObs.unsubscribe();
-    this.booksFetchObs.unsubscribe();
-    this.searchListObs.unsubscribe();
-    this.cartObs.unsubscribe();
+    this.booksListSub.unsubscribe();
+    this.booksFetchSub.unsubscribe();
+    this.searchListSub.unsubscribe();
+    this.cartSub.unsubscribe();
+    this.collectionSub.unsubscribe();
   }
 
 }
