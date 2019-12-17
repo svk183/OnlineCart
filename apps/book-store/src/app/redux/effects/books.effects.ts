@@ -33,7 +33,8 @@ export class BooksEffects {
                                             price: (obj.saleInfo.retailPrice && obj.saleInfo.retailPrice.amount ) ? obj.saleInfo.retailPrice.amount : 0,
                                             imageLink: obj.volumeInfo.imageLinks && obj.volumeInfo.imageLinks.thumbnail ? obj.volumeInfo.imageLinks.thumbnail : '',
                                             publisher: obj.volumeInfo.publisher,
-                                            title: obj.volumeInfo.title
+                                            title: obj.volumeInfo.title,
+                                            description: obj.volumeInfo.description
                                         };
                             });
                         } else {

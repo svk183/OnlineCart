@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.store.dispatch( fetchAction );
     } else {
       this.errorMessage = "Please enter a valid search text";
-    }
+    }    
   }
 
   ngOnDestroy() {

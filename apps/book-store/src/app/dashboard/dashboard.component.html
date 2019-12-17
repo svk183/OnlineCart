@@ -1,5 +1,5 @@
 <form class="searchBook" (submit)="searchBooks(searchForm)" #searchForm="ngForm" style="margin:auto;max-width:300px">
-    <input type="text" [placeholder]="recentSearchs && recentSearchs.length ? recentSearchs[recentSearchs.length - 1] : 'Search Book..'" name="searchField" ngModel #searchField="ngModel" searchField pattern="[a-zA-Z0-9 ]" required/>
+    <input type="text" [placeholder]="recentSearchs && recentSearchs.length ? recentSearchs[recentSearchs.length - 1] : 'Search Book..'" name="searchField" ngModel #searchField="ngModel" searchField pattern="[a-zA-Z0-9 ]*" required/>
     <button>
         <mat-icon>search</mat-icon>
     </button>

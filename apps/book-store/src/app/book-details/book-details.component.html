@@ -3,19 +3,20 @@
 
   <mat-card class="example-card" *ngIf="bookDetails">
     <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
+      <div mat-card-avatar class="example-header-image" [style]="'background-image: url(' + bookDetails.imageLink + ')'"></div>
       <mat-card-title>{{ bookDetails.title }}</mat-card-title>
       <mat-card-subtitle
         >Price: {{ bookDetails.price | currency }}</mat-card-subtitle
       >
     </mat-card-header>
-    <img
+    <img class="previewImage"
       mat-card-image
       [src]="bookDetails.imageLink"
       [alt]="bookDetails.title"
     />
     <mat-card-content>
       <p>Authors: {{ bookDetails.authors.join(',') }}</p>
+      <!-- <p> Description: {{ bookDetails.description }}</p> -->
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" (click)="addBookToCart()" [disabled]="itemBought"> {{ itemBought == true ? 'Added To Cart' : 'Add To Cart' }}</button>
