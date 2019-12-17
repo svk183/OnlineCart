@@ -1,12 +1,21 @@
 .example-card {
   max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .bookDescription {
-  padding-top: 20px;
+  padding-top: 40px;
 }
 
 .previewImage {
   max-width: 50%;
-  padding-left: 20%;
+}
+
+.bookHeader {
+  text-align: center;
+}
+
+.cardHeader {
+  display: block;
 }

@@ -1,19 +1,33 @@
-<form class="searchBook" (submit)="searchBooks(searchForm)" #searchForm="ngForm" style="margin:auto;max-width:300px">
-    <input type="text" [placeholder]="recentSearchs && recentSearchs.length ? recentSearchs[recentSearchs.length - 1] : 'Search Book..'" name="searchField" ngModel #searchField="ngModel" searchField pattern="[a-zA-Z0-9 ]*" required/>
-    <button>
-        <mat-icon>search</mat-icon>
-    </button>
-</form>
-<p class="errMsg" *ngIf="errorMessage.length"> {{ errorMessage }}</p>
 
-<div class="grid-container" *ngIf="booksList.length">
-    <div *ngFor="let bookDetails of booksList" routerLink='bookdetails/{{ bookDetails.id }}'>
+<div class="container dashboardContainer">
+    <form class="searchBook" (submit)="searchBooks(searchForm)" #searchForm="ngForm">
+        <input type="text" [placeholder]="recentSearchs && recentSearchs.length ? recentSearchs[recentSearchs.length - 1] : 'Search Book..'" name="searchField" ngModel #searchField="ngModel" searchField pattern="[a-zA-Z0-9 ]*" required/>
+        <button>
+            <mat-icon>search</mat-icon>
+        </button>
+    </form>
+    <p class="errMsg" *ngIf="errorMessage.length"> {{ errorMessage }}</p>
+    
+    <div class="row" *ngIf="booksList.length">
+        <div class="col-4 booksBlock" *ngFor="let bookDetails of booksList">
+            <div class="card cardBlock">
+                <img class="card-img-top mx-auto d-block rounded cardImage" [src]="bookDetails.imageLink" alt="{{ bookDetails.title }}">
+                <div class="card-body">
+                    <!-- <h4 class="card-title" style="font-size: 16px; font-weight: 600;">{{ bookDetails.title }}</h4> -->
+                    <p class="card-text">Price: {{ bookDetails.price | currency }}</p>
+                    <a routerLink='bookdetails/{{ bookDetails.id }}' class="btn btn-primary">See Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!booksList.length">
+        <p class="noBooks">No books to show</p>
+    </div>
+    
+    <!-- <div *ngFor="let bookDetails of booksList" routerLink='bookdetails/{{ bookDetails.id }}'>
         <mat-card class="example-card">
             <img mat-card-image [src]="bookDetails.imageLink" alt="{{bookDetails.title}}" />
         </mat-card>
-    </div>
-</div>
-
-<div *ngIf="!booksList.length">
-    <p class="noBooks">No books to show</p>
+    </div> -->
 </div>

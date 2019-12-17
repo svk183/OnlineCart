@@ -4,6 +4,8 @@
 
 .searchBook {
   padding-top: 100px;
+  margin:auto;
+  max-width:300px;
 }
 
 form.searchBook input[type='text'] {
@@ -63,4 +65,22 @@ form.searchBook::after {
 .errMsg {
   color: red;
   text-align: center;
+}
+
+.dashboardContainer {
+  margin-top: 20px;
+}
+
+.booksBlock {
+  margin: 10px;
+}
+
+.cardBlock {
+  width:200px;
+  padding: 5px;
+}
+
+.cardImage {
+  width: 150px;
+  height: 200px;
 }

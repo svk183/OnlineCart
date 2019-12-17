@@ -1,9 +1,8 @@
 <div class="bookDescription">
-  <h2>Book Details</h2>
+  <h2 class="bookHeader">Book Details</h2>
 
   <mat-card class="example-card" *ngIf="bookDetails">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image" [style]="'background-image: url(' + bookDetails.imageLink + ')'"></div>
+    <mat-card-header class="cardHeader">
       <mat-card-title>{{ bookDetails.title }}</mat-card-title>
       <mat-card-subtitle
         >Price: {{ bookDetails.price | currency }}</mat-card-subtitle
