@@ -1,25 +1,43 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { APP_BASE_HREF } from '@angular/common';
+
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+import { AngularMaterialsModule } from '../../angular-materials/angular-materials.module';
+import { RoutingModule } from '../routing/routing.module';
 
 import { MyCollectionComponent } from './my-collection.component';
 
-describe('MyCollectionComponent', () => {
-  let component: MyCollectionComponent;
+import { StoreModule } from '@ngrx/store';
+import { reducerMapper } from '../../redux/reducers/mapper';
+import { EffectsModule } from '@ngrx/effects';
+import { BooksEffects } from '../../redux/effects/books.effects';
+
+describe('AppComponent', () => {
   let fixture: ComponentFixture<MyCollectionComponent>;
+  let app: MyCollectionComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MyCollectionComponent ]
-    })
-    .compileComponents();
+      imports: [
+  RoutingModule,
+        FormsModule,
+        HttpClientModule,
+        AngularMaterialsModule,
+        StoreModule.forRoot(reducerMapper),
+        EffectsModule.forRoot([BooksEffects])
+      ],
+      declarations: [
+        MyCollectionComponent
+      ]
+    }).compileComponents().then(()=>{
+      fixture = TestBed.createComponent(MyCollectionComponent);
+      app = fixture.debugElement.componentInstance;
+    });
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MyCollectionComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create the app', () => {
+    expect(app).toBeTruthy();
   });
 });

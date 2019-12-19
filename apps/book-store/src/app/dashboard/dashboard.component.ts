@@ -11,10 +11,10 @@ import { FetchBooks } from '../redux/actions/books.actions';
 import { AddToSearchListAction } from '../redux/actions/search.actions';
 import { selectCartIds } from '../redux/reducers/cart.reducer';
 import { selectCollectionIds } from '../redux/reducers/mycollection.reducer';
+import { ReduceMappers } from '../redux/reducers/mapper';
 
 // Dev Models and Enums
 import { Book } from './../models/book';
-import { ReduceMappers } from '../redux/reducers/mapper';
 
 @Component({
   selector: 'online-cart-dashboard',
@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // function used to get the books searched by user
   searchBooks( form: NgForm ) {
-    if( form.valid ){
+    if( form.valid && form.value.searchField ){
       this.errorMessage = '';
       this.booksList = [];
 
@@ -85,11 +85,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // Unsubscribing all redux subscriptions
-    this.booksListSub.unsubscribe();
-    this.booksFetchSub.unsubscribe();
-    this.searchListSub.unsubscribe();
-    this.cartSub.unsubscribe();
-    this.collectionSub.unsubscribe();
+    if( this.booksListSub ) {
+      this.booksListSub.unsubscribe();
+      this.booksFetchSub.unsubscribe();
+      this.searchListSub.unsubscribe();
+      this.cartSub.unsubscribe();
+      this.collectionSub.unsubscribe();
+    }
   }
 
 }

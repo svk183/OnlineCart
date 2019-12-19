@@ -1,14 +1,13 @@
-
 <div class="container dashboardContainer">
     <form class="searchBook" (submit)="searchBooks(searchForm)" #searchForm="ngForm">
-        <input type="text" [placeholder]="recentSearchs && recentSearchs.length ? recentSearchs[recentSearchs.length - 1] : 'Search Book..'" name="searchField" ngModel #searchField="ngModel" searchField pattern="[a-zA-Z0-9 ]*" required/>
-        <button>
+        <input type="text" class="searchValue" [placeholder]="recentSearchs && recentSearchs.length ? recentSearchs[recentSearchs.length - 1] : 'Search Book..'" name="searchField" ngModel #searchField="ngModel" searchField pattern="[a-zA-Z0-9 ]*" required/>
+        <button class="searchBtn">
             <mat-icon>search</mat-icon>
         </button>
     </form>
     <p class="errMsg" *ngIf="errorMessage.length"> {{ errorMessage }}</p>
     
-    <div class="row" *ngIf="booksList.length">
+    <div class="row booksBlock" *ngIf="booksList.length">
         <div class="col-4 booksBlock" *ngFor="let bookDetails of booksList">
             <div class="card cardBlock">
                 <img class="card-img-top mx-auto d-block rounded cardImage" [src]="bookDetails.imageLink" alt="{{ bookDetails.title }}">
