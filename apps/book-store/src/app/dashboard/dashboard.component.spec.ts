@@ -119,11 +119,9 @@ describe('Search Form Tests', ()=> {
   it('should throw error for empty search', () => {
     const inputEle = fixture.debugElement.query( By.css('.searchValue') ).nativeElement
     inputEle.value = '';
-    inputEle.dispatchEvent(new Event('input') );
+    inputEle.dispatchEvent( new Event('input') );
 
     fixture.detectChanges();
-
-    expect( inputEle.value ).toEqual('');
     
     el = fixture.debugElement.query( By.css('.searchBtn') ).nativeElement;
     el.click();
@@ -133,6 +131,26 @@ describe('Search Form Tests', ()=> {
     expect( comp.errorMessage ).toBe( 'Please enter a valid search text' );
   });
 
+  it('Initial state of the form should be invalid', ()=>{
+    const inputEle = fixture.debugElement.query( By.css('.searchValue') ).nativeElement;
+    inputEle.value = 'dhoni';
+    inputEle.dispatchEvent( new Event('input') );
+
+    fixture.detectChanges();
+    
+    el = fixture.debugElement.query( By.css('.searchBtn') ).nativeElement;
+    el.click();
+
+    // expect( comp.errorMessage ).toBe('');
+  });
+
+  it('should change errorMessage if input consists of special chars', ()=>{
+
+  });
+
+  it('should return a default books list', ()=>{
+
+  });
 });
 
 export function getSampleBook() {

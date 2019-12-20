@@ -30,9 +30,15 @@ export class MyCollectionComponent implements OnInit, OnDestroy {
     });
   }
 
+  getStoreRef() {
+    return this.store;
+  }
+
   ngOnDestroy() {
     // UnSubscribing all redux sub
-    this.collectionSub.unsubscribe();
+    if( this.collectionSub ){
+      this.collectionSub.unsubscribe();
+    }
   }
 
 }

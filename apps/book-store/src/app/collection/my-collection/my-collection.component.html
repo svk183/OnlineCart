@@ -1,10 +1,10 @@
 <h2 class="header">My Collection</h2>
 
-<mat-card *ngIf="!collectionBooks.length">
+<mat-card class="noCollectionItems" *ngIf="!collectionBooks.length">
   No Books Added to Collection!
 </mat-card>
 
-<mat-accordion *ngIf="collectionBooks.length">
+<mat-accordion class="collectionItemsBlock" *ngIf="collectionBooks.length">
   <mat-expansion-panel *ngFor="let bookDetails of collectionBooks">
     <mat-expansion-panel-header>
       <mat-panel-title>

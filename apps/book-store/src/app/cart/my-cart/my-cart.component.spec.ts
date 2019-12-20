@@ -1,23 +1,22 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { APP_BASE_HREF } from '@angular/common';
+import { By } from '@angular/platform-browser';
 
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AngularMaterialsModule } from '../../angular-materials/angular-materials.module';
 import { RoutingModule } from '../routing/routing.module';
 
 import { MyCartComponent } from './my-cart.component';
+import { getSampleBook } from '../../dashboard/dashboard.component.spec';
+import { Book } from '../../models/book';
 
 import { StoreModule } from '@ngrx/store';
 import { reducerMapper } from '../../redux/reducers/mapper';
 import { EffectsModule } from '@ngrx/effects';
 import { BooksEffects } from '../../redux/effects/books.effects';
-import { By } from '@angular/platform-browser';
-import { getSampleBook } from '../../dashboard/dashboard.component.spec';
-import { Book } from '../../models/book';
 import { AddBookToCartAction } from '../../redux/actions/cart.actions';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<MyCartComponent>;
@@ -80,33 +79,31 @@ describe('AppComponent', () => {
   });
 
   it('shouldnt show address block if delivery details exist', ()=> {
-    addSampleBookToCart( comp, fixture );
-    comp.name = "XXXX";
-    comp.payNow();
+    makePayment( comp, fixture );
     
     expect( comp.expandAddressBlock ).toBe( false );
   });
 
   it(`should show 'No Books added to cart block' after payment`, ()=> {
-    addSampleBookToCart( comp, fixture );
-    comp.name = "XXXX";
-    comp.payNow();
-    
-    fixture.detectChanges();
+    makePayment( comp, fixture );
 
     expect( fixture.debugElement.query( By.css('.noCartItems') ) ).toBeTruthy();
   });
 
   it(`shouldn't show cart details after payment`, ()=> {
-    addSampleBookToCart( comp, fixture );
-    comp.name = "XXXX";
-    comp.payNow();
-    
-    fixture.detectChanges();
+    makePayment( comp, fixture );
 
     expect( fixture.debugElement.query( By.css('.cartBlock') ) ).toBeFalsy();
   });
 });
+
+function makePayment(comp, fixture) {
+  addSampleBookToCart( comp, fixture );
+  comp.name = "XXXX";
+  comp.payNow();
+  
+  fixture.detectChanges();
+}
 
 function addSampleBookToCart( comp, fixture) {
   const sampleObj = getSampleCartObj();
@@ -118,7 +115,7 @@ function addSampleBookToCart( comp, fixture) {
   fixture.detectChanges();
 }
 
-function getSampleCartObj(): Book[] {
+export function getSampleCartObj(): Book[] {
   const sampleBook: Book = getSampleBook();
   sampleBook.deliveryAddress = {
     address: 'asdasd',

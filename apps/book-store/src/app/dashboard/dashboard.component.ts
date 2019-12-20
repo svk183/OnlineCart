@@ -67,6 +67,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // function used to get the books searched by user
   searchBooks( form: NgForm ) {
+    console.log(form.value);
     if( form.valid && form.value.searchField ){
       this.errorMessage = '';
       this.booksList = [];
