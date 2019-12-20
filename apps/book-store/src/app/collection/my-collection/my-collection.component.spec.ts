@@ -24,7 +24,7 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-  RoutingModule,
+        RoutingModule,
         FormsModule,
         HttpClientModule,
         AngularMaterialsModule,
@@ -41,11 +41,11 @@ describe('AppComponent', () => {
     });
   }));
 
-  it('should create the app', () => {
+  test('should create the app', () => {
     expect(comp).toBeTruthy();
   });
 
-  it(`should show 'No Books Added to Collection!' initially`, () => {
+  test(`should show 'No Books Added to Collection!' initially`, () => {
     comp.collectionBooks = [];
 
     fixture.detectChanges();
@@ -53,7 +53,7 @@ describe('AppComponent', () => {
     expect( fixture.debugElement.query( By.css('.noCollectionItems') ) ).toBeTruthy();
   });
 
-  it(`should show collection Block`, () => {
+  test(`should show collection Block`, () => {
     const collectionAction = new AddToCollectionAction( getSampleCartObj()[0] );
     comp.getStoreRef().dispatch( collectionAction );
 

@@ -39,20 +39,20 @@ describe('UI Blocks display', ()=> {
     });
   }));
     
-  it('should create the app', () => {
+  test('should create the app', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should not contain no books to show div block`, () => {
+  test(`should not contain no books to show div block`, () => {
     expect( fixture.debugElement.query( By.css('.noBooks') ) ).toBe( null );
   });
 
-  it('should not display any books initially', () => {
+  test('should not display any books initially', () => {
     expect( fixture.debugElement.query( By.css('.booksBlock') ) ).toBeFalsy();
   });
 
-  it(`should show 'no books to show' in UI`, () => {
+  test(`should show 'no books to show' in UI`, () => {
     fixture.detectChanges();
     const app = fixture.debugElement.componentInstance;
     app.recentSearchs = ['demo'];
@@ -62,7 +62,7 @@ describe('UI Blocks display', ()=> {
     expect( fixture.debugElement.query( By.css('.noBooks') ).nativeElement.textContent ).toBe('No books to show');
   });
 
-  it(`should show books block`, async(() => {
+  test(`should show books block`, async(() => {
     fixture.detectChanges();
     const app = fixture.debugElement.componentInstance;
     app.booksList = [ getSampleBook() ];
@@ -102,11 +102,11 @@ describe('Search Form Tests', ()=> {
     });
   }));
     
-  it('should create the app', () => {
+  test('should create the app', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should call form submit function', async( ()=> {
+  test('should call form submit function', async( ()=> {
     fixture.detectChanges();
     spyOn(comp, 'searchBooks');
 
@@ -116,7 +116,7 @@ describe('Search Form Tests', ()=> {
     expect( comp.searchBooks ).toHaveBeenCalledTimes( 1 );
   }) );
 
-  it('should throw error for empty search', () => {
+  test('should throw error for empty search', () => {
     const inputEle = fixture.debugElement.query( By.css('.searchValue') ).nativeElement
     inputEle.value = '';
     inputEle.dispatchEvent( new Event('input') );
@@ -131,7 +131,7 @@ describe('Search Form Tests', ()=> {
     expect( comp.errorMessage ).toBe( 'Please enter a valid search text' );
   });
 
-  it('Initial state of the form should be invalid', ()=>{
+  test('Initial state of the form should be invalid', ()=>{
     const inputEle = fixture.debugElement.query( By.css('.searchValue') ).nativeElement;
     inputEle.value = 'dhoni';
     inputEle.dispatchEvent( new Event('input') );
@@ -144,11 +144,11 @@ describe('Search Form Tests', ()=> {
     // expect( comp.errorMessage ).toBe('');
   });
 
-  it('should change errorMessage if input consists of special chars', ()=>{
+  test('should change errorMessage if input consists of special chars', ()=>{
 
   });
 
-  it('should return a default books list', ()=>{
+  test('should return a default books list', ()=>{
 
   });
 });

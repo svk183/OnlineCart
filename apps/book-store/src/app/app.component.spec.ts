@@ -37,11 +37,11 @@ describe('AppComponent', () => {
     });
   }));
 
-  it('should create the app', () => {
+  test('should create the app', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'book-store'`, () => {
+  test(`should have as title 'book-store'`, () => {
     expect(app.title).toEqual('book-store');
   });
 });

@@ -5,7 +5,6 @@ import { RoutingModule } from './../routing/routing.module';
 import { By } from '@angular/platform-browser';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { APP_BASE_HREF } from '@angular/common';
-import { DebugElement } from '@angular/core';
 
 import { AngularMaterialsModule } from '../angular-materials/angular-materials.module';
 
@@ -43,15 +42,15 @@ describe('Book Details Component', ()=> {
     });
   }));
     
-  it('should create the app', () => {
+  test('should create the app', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('should not contain bookDetail block initially', ()=>{
+  test('should not contain bookDetail block initially', ()=>{
     expect( fixture.debugElement.query( By.css('.example-card') ) ).toBeFalsy();
   });
 
-  it('should show book details', ()=>{
+  test('should show book details', ()=>{
     comp.bookDetails = getSampleBook();
 
     comp.setSelectedBookId( comp.bookDetails.id );

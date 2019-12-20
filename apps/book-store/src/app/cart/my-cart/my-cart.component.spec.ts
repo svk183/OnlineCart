@@ -42,11 +42,11 @@ describe('AppComponent', () => {
     });
   }));
 
-  it('should create the app', () => {
+  test('should create the app', () => {
     expect(comp).toBeTruthy();
   });
 
-  it(`should show 'No Books added to cart block' - if no cart items`, ()=> {
+  test(`should show 'No Books added to cart block' - if no cart items`, ()=> {
     comp.cartDetails = [];
 
     fixture.detectChanges();
@@ -54,43 +54,43 @@ describe('AppComponent', () => {
     expect( fixture.debugElement.query( By.css('.noCartItems') ) ).toBeTruthy();
   });
 
-  it(`should not show 'No Books added to cart block' - if cart items exist`, ()=> {
+  test(`should not show 'No Books added to cart block' - if cart items exist`, ()=> {
     addSampleBookToCart( comp, fixture );
     
     expect( fixture.debugElement.query( By.css('.noCartItems') ) ).toBeFalsy();
   });
 
-  it('should show cart items', ()=> {
+  test('should show cart items', ()=> {
     addSampleBookToCart( comp, fixture );
 
     expect( fixture.debugElement.query( By.css('.cartBlock') ) ).toBeTruthy();
   });
 
-  it('should show cart total', ()=> {
+  test('should show cart total', ()=> {
     addSampleBookToCart( comp, fixture );
 
     expect( comp.cartValue ).toBe( comp.cartDetails[0].price );
   });
 
-  it('should show address block if delivery details doesnt exist', ()=> {
+  test('should show address block if delivery details doesnt exist', ()=> {
     comp.payNow();
 
     expect( comp.expandAddressBlock ).toBe( true );
   });
 
-  it('shouldnt show address block if delivery details exist', ()=> {
+  test('shouldnt show address block if delivery details exist', ()=> {
     makePayment( comp, fixture );
     
     expect( comp.expandAddressBlock ).toBe( false );
   });
 
-  it(`should show 'No Books added to cart block' after payment`, ()=> {
+  test(`should show 'No Books added to cart block' after payment`, ()=> {
     makePayment( comp, fixture );
 
     expect( fixture.debugElement.query( By.css('.noCartItems') ) ).toBeTruthy();
   });
 
-  it(`shouldn't show cart details after payment`, ()=> {
+  test(`shouldn't show cart details after payment`, ()=> {
     makePayment( comp, fixture );
 
     expect( fixture.debugElement.query( By.css('.cartBlock') ) ).toBeFalsy();
