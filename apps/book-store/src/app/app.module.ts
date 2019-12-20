@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './routing/routing.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,6 +34,7 @@ import { environment } from './../environments/environment.prod';
             HttpClientModule,
             RoutingModule, 
             FormsModule,
+            ReactiveFormsModule,
             NoopAnimationsModule, 
             AngularMaterialsModule,
             StoreModule.forRoot(reducerMapper),

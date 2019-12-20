@@ -1,4 +1,4 @@
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './../routing/routing.module';
 
@@ -25,6 +25,7 @@ describe('Book Details Component', ()=> {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
+        ReactiveFormsModule,
         HttpClientModule,
         RoutingModule,
         AngularMaterialsModule,

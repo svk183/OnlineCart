@@ -1,6 +1,17 @@
 <div class="container dashboardContainer">
+    
+    <!-- Template Driven form
     <form class="searchBook" (ngSubmit)="searchBooks(searchForm)" #searchForm="ngForm">
         <input type="text" class="searchValue" [placeholder]="recentSearchs && recentSearchs.length ? recentSearchs[recentSearchs.length - 1] : 'Search Book..'" name="searchField" ngModel #searchField="ngModel" searchField pattern="[a-zA-Z0-9 ]*" required/>
+        <button type="submit" [disabled]="searchForm.invalid" class="searchBtn">
+            <mat-icon>search</mat-icon>
+        </button>
+    </form> -->
+
+    <!-- Reactive Form -->
+    <form class="searchBook" [formGroup]="searchForm" (ngSubmit)="searchBooks()" novalidate>
+        <input type="text" formControlName="searchField" class="searchValue" 
+                [placeholder]="recentSearchs && recentSearchs.length ? recentSearchs[recentSearchs.length - 1] : 'Search Book..'" />
         <button type="submit" [disabled]="searchForm.invalid" class="searchBtn">
             <mat-icon>search</mat-icon>
         </button>

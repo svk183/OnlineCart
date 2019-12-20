@@ -2,7 +2,7 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { APP_BASE_HREF } from '@angular/common';
 
 import { RoutingModule } from './routing/routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularMaterialsModule } from './angular-materials/angular-materials.module';
 
@@ -20,6 +20,7 @@ describe('AppComponent', () => {
       imports: [
         RoutingModule,
         FormsModule,
+        ReactiveFormsModule,
         AngularMaterialsModule
       ],
       declarations: [

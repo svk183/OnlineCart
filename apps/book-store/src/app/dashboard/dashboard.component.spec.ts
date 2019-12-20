@@ -1,9 +1,9 @@
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './../routing/routing.module';
 
 import { By } from '@angular/platform-browser';
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { APP_BASE_HREF } from '@angular/common';
 import { DebugElement } from '@angular/core';
 
@@ -16,6 +16,7 @@ import { reducerMapper } from '../redux/reducers/mapper';
 
 import { DashboardComponent } from './dashboard.component';
 import { BookDetailsComponent } from '../book-details/book-details.component';
+import { ChangeBooks } from '../redux/actions/books.actions';
 
 describe('UI Blocks display', ()=> {
   let fixture;
@@ -24,6 +25,7 @@ describe('UI Blocks display', ()=> {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
+        ReactiveFormsModule,
         HttpClientModule,
         RoutingModule,
         AngularMaterialsModule,
@@ -83,6 +85,7 @@ describe('Search Form Tests', ()=> {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
+        ReactiveFormsModule,
         HttpClientModule,
         RoutingModule,
         AngularMaterialsModule,
@@ -113,44 +116,45 @@ describe('Search Form Tests', ()=> {
     el = fixture.debugElement.query( By.css('.searchBtn') ).nativeElement;
     el.click();
 
-    expect( comp.searchBooks ).toHaveBeenCalledTimes( 1 );
+    expect( comp.searchBooks ).toHaveBeenCalledTimes( 0 );
   }) );
 
-  test('should throw error for empty search', () => {
-    const inputEle = fixture.debugElement.query( By.css('.searchValue') ).nativeElement
-    inputEle.value = '';
-    inputEle.dispatchEvent( new Event('input') );
+  test('should throw error for empty search/initial state', () => {
+    comp.searchForm.controls['searchField'].setValue('');
+
+    expect( comp.searchForm.valid ).toBeFalsy();
+  });
+  
+  test('should throw error for special characters', () => {
+    comp.searchForm.controls['searchField'].setValue('adc#');
+
+    expect( comp.searchForm.valid ).toBeFalsy();
+  });
+
+  test('should return a books list', async(()=>{
+    spyOn( comp, 'searchBooks').and.callFake( ()=>{      
+       comp.booksList = [getSampleBook()];
+    });
+
+    comp.searchBooks();
+
+    expect( comp.booksList.length ).toBeGreaterThan( 0 );
+  }));
+
+  test('should show books list in UI', async(()=>{
+    spyOn( comp, 'searchBooks').and.callFake( ()=>{      
+       comp.booksList = [getSampleBook()];
+    });
+
+    comp.searchBooks();
+
+    const booksAction = new ChangeBooks( comp.booksList );
+    comp.getStoreRef().dispatch( booksAction );
 
     fixture.detectChanges();
     
-    el = fixture.debugElement.query( By.css('.searchBtn') ).nativeElement;
-    el.click();
-
-    fixture.detectChanges();
-
-    expect( comp.errorMessage ).toBe( 'Please enter a valid search text' );
-  });
-
-  test('Initial state of the form should be invalid', ()=>{
-    const inputEle = fixture.debugElement.query( By.css('.searchValue') ).nativeElement;
-    inputEle.value = 'dhoni';
-    inputEle.dispatchEvent( new Event('input') );
-
-    fixture.detectChanges();
-    
-    el = fixture.debugElement.query( By.css('.searchBtn') ).nativeElement;
-    el.click();
-
-    // expect( comp.errorMessage ).toBe('');
-  });
-
-  test('should change errorMessage if input consists of special chars', ()=>{
-
-  });
-
-  test('should return a default books list', ()=>{
-
-  });
+    expect( fixture.debugElement.query( By.css('.booksBlock') ) ).toBeTruthy();
+  }));
 });
 
 export function getSampleBook() {

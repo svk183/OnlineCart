@@ -1,6 +1,6 @@
 //Angular Imports
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 // NGRX / Redux Imports
 import { Subscription } from 'rxjs';
@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public errorMessage: string;
   public cartItemIds: string[] | number[];
   public collectionIds: string[] | number[];
+  public searchForm: FormGroup;
 
   // Observers for redux events
   private booksListSub: Subscription;
@@ -39,7 +40,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor( private store: Store<{ booksList: Book[],
                                       apiError: any, cartList: any,
                                       searchList: string[]
-                                    }> ) {}
+                                    }> ) {
+    this.searchForm = new FormGroup({
+      searchField: new FormControl('', [ Validators.required, Validators.pattern('[a-zA-Z0-9 ]*') ])
+    });
+  }
   
   ngOnInit() {
     this.errorMessage = '';
@@ -66,22 +71,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   // function used to get the books searched by user
-  searchBooks( form: NgForm ) {
-    console.log(form.value);
-    if( form.valid && form.value.searchField ){
+  searchBooks() {      
+    if( this.searchForm.valid && this.searchForm.value.searchField ){
       this.errorMessage = '';
       this.booksList = [];
 
       // calling search action to store all the search list
-      const searchAction = new AddToSearchListAction( form.value.searchField );
+      const searchAction = new AddToSearchListAction( this.searchForm.value.searchField );
       this.store.dispatch( searchAction );
 
       // calling fetch Action which linked to effects
-      const fetchAction = new FetchBooks( form.value.searchField );
+      const fetchAction = new FetchBooks( this.searchForm.value.searchField );
       this.store.dispatch( fetchAction );
     } else {
       this.errorMessage = "Please enter a valid search text";
     }    
+  }
+
+  getStoreRef(){
+    return this.store;
   }
 
   ngOnDestroy() {
