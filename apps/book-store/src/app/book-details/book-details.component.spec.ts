@@ -16,6 +16,7 @@ import { reducerMapper } from '../redux/reducers/mapper';
 
 import { BookDetailsComponent } from './book-details.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { getSampleBook } from '../dashboard/dashboard.component.spec';
 
 describe('Book Details Component', ()=> {
   let fixture: ComponentFixture<BookDetailsComponent>;
@@ -44,5 +45,19 @@ describe('Book Details Component', ()=> {
     
   it('should create the app', () => {
     expect(comp).toBeTruthy();
+  });
+
+  it('should not contain bookDetail block initially', ()=>{
+    expect( fixture.debugElement.query( By.css('.example-card') ) ).toBeFalsy();
+  });
+
+  it('should show book details', ()=>{
+    comp.bookDetails = getSampleBook();
+
+    comp.setSelectedBookId( comp.bookDetails.id );
+
+    fixture.detectChanges();
+
+    expect( fixture.debugElement.query( By.css('.example-card') ).nativeElement ).toBeTruthy();
   });
 });

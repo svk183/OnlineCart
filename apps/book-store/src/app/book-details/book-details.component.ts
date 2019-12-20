@@ -23,7 +23,7 @@ import { environment } from './../../environments/environment';
 export class BookDetailsComponent implements OnInit, OnDestroy {
   // Private varibles to implement functionality
   private books: Book[];
-  private selectdBookId: string;
+  private selectedBookId: string;
   private cartList: any;
 
   // Varibles used in HTML
@@ -58,12 +58,12 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     // Fetching Id from URL
     this.route.paramMap
     .subscribe( params => {
-      this.selectdBookId = params.get( environment.urlParams["bookdetails#"] );
+      this.selectedBookId = params.get( environment.urlParams["bookdetails#"] );
 
       // Fetching selected book details
-      if( this.selectdBookId ) {
+      if( this.selectedBookId ) {
         this.books.forEach( ( bookData ) => {
-          if( bookData.id === this.selectdBookId ){
+          if( bookData.id === this.selectedBookId ){
             this.bookDetails = bookData;
           }
         });
@@ -80,9 +80,9 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
   // Checking if book already exists in cart or not
   checkItemExistsInCart(){
-    if( this.selectdBookId ) {
+    if( this.selectedBookId ) {
       this.itemBought = this.cartList.ids.some( ( id ) => {
-        return id === this.selectdBookId;
+        return id === this.selectedBookId;
       }); 
     }
   }
@@ -105,17 +105,23 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
   // removing item from cart
   removeBookFromCart(){
-    const cartAction = new RemoveBookFromCartAction( this.selectdBookId );
+    const cartAction = new RemoveBookFromCartAction( this.selectedBookId );
 
     this.store.dispatch( cartAction );
 
     this.checkItemExistsInCart();
   }
 
+  setSelectedBookId( newId: string ) {
+    this.selectedBookId = newId;
+  }
+
   ngOnDestroy() {
     // Unsubscribing redux subscribers
-    this.booksListSub.unsubscribe();
-    this.cartObjSub.unsubscribe();
-    this.collectionSub.unsubscribe();
+    if( this.booksListSub ) {
+      this.booksListSub.unsubscribe();
+      this.cartObjSub.unsubscribe();
+      this.collectionSub.unsubscribe();
+    }
   }
 }

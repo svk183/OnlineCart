@@ -132,11 +132,17 @@ export class MyCartComponent implements OnInit, OnDestroy {
     }
   }
 
+  getStoreObj() {
+    return this.store;
+  }
+
   ngOnDestroy() {
     // UnSubscribing all redux subscribers
-    this.cartSub.unsubscribe();
-    this.collectionSub.unsubscribe();
-    this.addressSub.unsubscribe();
+    if( this.cartSub ) {
+      this.cartSub.unsubscribe();
+      this.collectionSub.unsubscribe();
+      this.addressSub.unsubscribe();
+    }
   }
 
 }

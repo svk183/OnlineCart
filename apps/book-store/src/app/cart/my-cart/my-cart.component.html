@@ -1,10 +1,10 @@
 <h2 style="padding-top: 50px;text-align: center;">My Cart</h2>
 
-<mat-card *ngIf="!cartDetails.length">
+<mat-card class="noCartItems" *ngIf="!cartDetails.length">
   No Books Added to Cart!
 </mat-card>
 
-<mat-accordion *ngIf="cartDetails.length">
+<mat-accordion class="cartBlock" *ngIf="cartDetails.length">
   <mat-expansion-panel *ngFor="let bookDetails of cartDetails">
     <mat-expansion-panel-header>
       <mat-panel-title>
