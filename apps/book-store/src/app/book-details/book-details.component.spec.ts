@@ -1,6 +1,7 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './../routing/routing.module';
+import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 
 import { By } from '@angular/platform-browser';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
@@ -12,9 +13,11 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { BooksEffects } from '../redux/effects/books.effects';
 import { reducerMapper } from '../redux/reducers/mapper';
+import { ChangeBooks } from '../redux/actions/books.actions';
 
 import { BookDetailsComponent } from './book-details.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+
 import { getSampleBook } from '../dashboard/dashboard.component.spec';
 
 describe('Book Details Component', ()=> {
@@ -34,7 +37,15 @@ describe('Book Details Component', ()=> {
       ],
       declarations: [BookDetailsComponent, DashboardComponent],
       providers: [
-        { provide: APP_BASE_HREF, useValue: '/'}
+        { provide: APP_BASE_HREF, useValue: '/'},
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              paramMap: convertToParamMap({bookId: getSampleBook().id})
+            }
+          }
+    }
       ]
     }).compileComponents().then( () => {
       fixture = TestBed.createComponent(BookDetailsComponent);
@@ -92,11 +103,35 @@ describe('Book Details Component', ()=> {
 
   test('should show "remove" if user clicked on buy now button', () => {
     comp.bookDetails = getSampleBook();
+    const router: Router = TestBed.get(Router);
+    const navigateSpy = spyOn(router, 'navigate');
 
     comp.setSelectedBookId( comp.bookDetails.id );
     comp.setCartList( { ids: [ comp.bookDetails.id ] } );
-    comp.addBookToCart();
+    comp.buyNow();
     
     expect( comp.itemBought ).toBeTruthy();
+    expect( navigateSpy ).toHaveBeenCalledWith( ['/cart'] );
+  });
+
+  test('should redirect to home if book details is null', () => {
+    comp.bookDetails = null;
+
+    const router: Router = TestBed.get(Router);
+    const navigateSpy = spyOn(router, 'navigate');
+
+    comp.ngOnInit();
+
+    expect( navigateSpy ).toHaveBeenCalledWith(['/']);
+  });
+
+  test('should get book details from book list', () => {
+    const sampleBook = getSampleBook();
+    const booksAction = new ChangeBooks( [ sampleBook ] );
+    comp.getStoreRef().dispatch( booksAction );
+    comp.setSelectedBookId( sampleBook.id );
+    comp.ngOnInit();
+
+    expect( comp.bookDetails.id ).toBe( sampleBook.id );
   });
 });

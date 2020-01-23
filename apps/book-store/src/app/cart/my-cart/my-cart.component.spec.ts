@@ -9,7 +9,9 @@ import { AngularMaterialsModule } from '../../angular-materials/angular-material
 import { RoutingModule } from '../routing/routing.module';
 
 import { MyCartComponent } from './my-cart.component';
+
 import { getSampleBook } from '../../dashboard/dashboard.component.spec';
+
 import { Book } from '../../models/book';
 
 import { StoreModule } from '@ngrx/store';
@@ -94,6 +96,17 @@ describe('AppComponent', () => {
     makePayment( comp, fixture );
 
     expect( fixture.debugElement.query( By.css('.cartBlock') ) ).toBeFalsy();
+  });
+
+  test('should remove book from cart', () => {
+    const sampleBook = getSampleBook();
+    const addToCartAction = new AddBookToCartAction( sampleBook );
+    comp.getStoreObj().dispatch( addToCartAction );
+
+    comp.removeBookFromCart( sampleBook.id );
+    comp.ngOnInit();
+
+    expect( comp.cartDetails.length ).toBe( 0 );
   });
 });
 

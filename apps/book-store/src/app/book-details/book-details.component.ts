@@ -56,26 +56,23 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.itemBought = false;
 
     // Fetching Id from URL
-    this.route.paramMap
-    .subscribe( params => {
-      this.selectedBookId = params.get( environment.urlParams["bookdetails#"] );
+    this.selectedBookId = this.route.snapshot.paramMap.get( environment.urlParams["bookdetails#"] );
+    
+    // Fetching selected book details
+    if( this.selectedBookId ) {
+      this.books.forEach( ( bookData ) => {
+        if( bookData.id === this.selectedBookId ){
+          this.bookDetails = bookData;
+        }
+      });
+    }
+    
+    // redirecting to home if bookslist missing in store
+    if( !this.bookDetails ){
+      this.router.navigate(['/']);
+    }
 
-      // Fetching selected book details
-      if( this.selectedBookId ) {
-        this.books.forEach( ( bookData ) => {
-          if( bookData.id === this.selectedBookId ){
-            this.bookDetails = bookData;
-          }
-        });
-      }
-
-      // redirecting to home if bookslist missing in store
-      if( !this.bookDetails ){
-        this.router.navigate(['/']);
-      }
-
-      this.checkItemExistsInCart();
-    });
+    this.checkItemExistsInCart();
   }
 
   // Checking if book already exists in cart or not
@@ -125,6 +122,10 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
       this.cartObjSub.unsubscribe();
       this.collectionSub.unsubscribe();
     }
+  }
+
+  getStoreRef(){
+    return this.store;
   }
 
   setCartList( cartDetails ) {
