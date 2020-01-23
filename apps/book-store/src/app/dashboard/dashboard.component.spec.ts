@@ -155,6 +155,24 @@ describe('Search Form Tests', ()=> {
     
     expect( fixture.debugElement.query( By.css('.booksBlock') ) ).toBeTruthy();
   }));
+
+  test('should call search books on valid form', () => {
+    comp.searchForm.controls['searchField'].setValue('dhoni');
+
+    fixture.detectChanges();
+
+    fixture.debugElement.query( By.css('.searchBtn') ).nativeElement.click();
+
+    expect( comp.errorMessage ).toBe('');
+  });
+
+  test('should show error message on invalid form submit', () => {
+    comp.searchForm.controls['searchField'].setValue('');
+    fixture.detectChanges();
+    comp.searchBooks();
+
+    expect( comp.errorMessage ).toBe('Please enter a valid search text');
+  });
 });
 
 export function getSampleBook() {

@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private cartSub: Subscription;
   private searchListSub: Subscription;
   private collectionSub: Subscription;
-
+  
   constructor( private store: Store<{ booksList: Book[],
                                       apiError: any, cartList: any,
                                       searchList: string[]

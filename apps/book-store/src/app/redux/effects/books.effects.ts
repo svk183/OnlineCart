@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 // RXJS/NGRX Modules
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, catchError, switchMap, filter } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 // Dev Defined Services/Actions
@@ -20,10 +20,10 @@ export class BooksEffects {
     fetchBooks = createEffect( () =>
         this.actions.pipe(
             ofType(BooksActionTypes.Fetch),
-            mergeMap( ( action: FetchBooks ) =>
+            switchMap( ( action: FetchBooks ) =>
                 this.booksService.getBooks(action.payload).pipe(
                     // Mapping google response to local Book Model
-                    map( ( res: any ) => {
+                    map( ( res: any ) => {                                                
                         if( res && res.items ) {
                             return res.items.map( ( obj: any ) => {
                                 return {
@@ -42,10 +42,8 @@ export class BooksEffects {
                         }
                     }),
                     // Removing all invalid books from the response
-                    map( ( res: Book[] ) => {
-                        return res.filter( item => {
-                            return (item.imageLink !== '' && item.price !== 0 ) ? true : false
-                        });
+                    filter( ( res: Book ) => {
+                        return (res.imageLink !== '' && res.price !== 0 );
                     }),
                     // Calling Books Action
                     map( response => ( {type: BooksActionTypes.Change, payload: response })),

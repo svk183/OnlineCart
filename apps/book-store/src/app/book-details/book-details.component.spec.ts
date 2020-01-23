@@ -60,4 +60,43 @@ describe('Book Details Component', ()=> {
 
     expect( fixture.debugElement.query( By.css('.example-card') ).nativeElement ).toBeTruthy();
   });
+
+  test('should not show "add to cart / buy now" if already added book to cart', () => {
+    comp.bookDetails = getSampleBook();
+
+    comp.setSelectedBookId( comp.bookDetails.id );
+    comp.setCartList( { ids: [ comp.bookDetails.id ] } );
+    comp.checkItemExistsInCart();
+
+    expect( comp.itemBought ).toBeTruthy();
+  });
+
+  test('should show "add to cart / buy now" if selected book not in cart', () => {
+    comp.bookDetails = getSampleBook();
+
+    comp.setSelectedBookId( 'randomId' );
+    comp.checkItemExistsInCart();
+
+    expect( comp.itemBought ).toBeFalsy();
+  });
+
+  test('should show "add to cart / buy now" if book removed from cart', () => {
+    comp.bookDetails = getSampleBook();
+
+    comp.setSelectedBookId( comp.bookDetails.id );
+
+    comp.removeBookFromCart();
+
+    expect( comp.itemBought ).toBeFalsy();
+  });
+
+  test('should show "remove" if user clicked on buy now button', () => {
+    comp.bookDetails = getSampleBook();
+
+    comp.setSelectedBookId( comp.bookDetails.id );
+    comp.setCartList( { ids: [ comp.bookDetails.id ] } );
+    comp.addBookToCart();
+    
+    expect( comp.itemBought ).toBeTruthy();
+  });
 });

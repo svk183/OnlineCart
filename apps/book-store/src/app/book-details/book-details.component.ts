@@ -80,10 +80,12 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
   // Checking if book already exists in cart or not
   checkItemExistsInCart(){
-    if( this.selectedBookId ) {
+    if( this.selectedBookId && this.cartList ) {
       this.itemBought = this.cartList.ids.some( ( id ) => {
         return id === this.selectedBookId;
       }); 
+    } else {
+      this.itemBought = false;
     }
   }
 
@@ -123,5 +125,9 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
       this.cartObjSub.unsubscribe();
       this.collectionSub.unsubscribe();
     }
+  }
+
+  setCartList( cartDetails ) {
+    this.cartList = cartDetails;
   }
 }
