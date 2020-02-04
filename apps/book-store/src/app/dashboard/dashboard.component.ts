@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     // initialising redux data change listerners(Observers)
     this.booksListSub = this.store.pipe(select(ReduceMappers.booksList)).subscribe( ( newBooksList: Book[] ) => {
-      this.booksList = newBooksList;      
+      this.booksList = newBooksList;
     });
     this.booksFetchSub = this.store.select(ReduceMappers.apiError).subscribe( ( errMessage ) => {
       // Show error popup to user
@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.store.dispatch( fetchAction );
     } else {
       this.errorMessage = "Please enter a valid search text";
-    }    
+    }
   }
 
   getStoreRef(){

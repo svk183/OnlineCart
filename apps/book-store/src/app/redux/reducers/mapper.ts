@@ -1,7 +1,7 @@
 // Angular Redux Modules
 import { ActionReducerMap } from '@ngrx/store';
 
-// Dev Defienied Reducers
+// Dev Definied Reducers
 import { BooksListReducer } from './books.reducer';
 import { APIErrorReducer } from './apiError.reducer';
 import { SearchReducer } from './search.reducer';

@@ -10,7 +10,7 @@ import { Book } from '../../models/book';
 
 // Entity configuration
 export const cartAdapter = createEntityAdapter<Book>();
-export interface CartState extends EntityState<Book> {}
+export interface CartState extends EntityState<Book> {};
 
 // Initial State
 const initialState: CartState = cartAdapter.getInitialState();
