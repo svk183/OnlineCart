@@ -13,6 +13,9 @@
     },
     "book-store": {
       "tags": []
+    },
+    "book-api-book-api": {
+      "tags": []
     }
   }
 }

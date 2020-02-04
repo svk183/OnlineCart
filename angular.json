@@ -67,7 +67,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "book-store:build"
+            "browserTarget": "book-store:build",
+            "proxyConfig": "apps/book-store/proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -132,6 +133,65 @@
               "**/node_modules/**",
               "!apps/book-store-e2e/**"
             ]
+          }
+        }
+      }
+    },
+    "book-api-book-api": {
+      "root": "apps/book-api/book-api",
+      "sourceRoot": "apps/book-api/book-api/src",
+      "projectType": "application",
+      "prefix": "book-api-book-api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/book-api/book-api",
+            "main": "apps/book-api/book-api/src/main.ts",
+            "tsConfig": "apps/book-api/book-api/tsconfig.app.json",
+            "assets": [
+              "apps/book-api/book-api/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/book-api/book-api/src/environments/environment.ts",
+                  "with": "apps/book-api/book-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "book-api-book-api:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/book-api/book-api/tsconfig.app.json",
+              "apps/book-api/book-api/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/book-api/book-api/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/book-api/book-api/jest.config.js",
+            "tsConfig": "apps/book-api/book-api/tsconfig.spec.json"
           }
         }
       }
