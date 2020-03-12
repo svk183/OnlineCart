@@ -16,6 +16,12 @@
     },
     "book-api-book-api": {
       "tags": []
+    },
+    "apps-proxy-server": {
+      "tags": []
+    },
+    "proxy-server": {
+      "tags": []
     }
   }
 }

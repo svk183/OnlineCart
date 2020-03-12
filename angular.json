@@ -195,6 +195,124 @@
           }
         }
       }
+    },
+    "apps-proxy-server": {
+      "root": "apps/apps/proxy-server",
+      "sourceRoot": "apps/apps/proxy-server/src",
+      "projectType": "application",
+      "prefix": "apps-proxy-server",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/apps/proxy-server",
+            "main": "apps/apps/proxy-server/src/main.ts",
+            "tsConfig": "apps/apps/proxy-server/tsconfig.app.json",
+            "assets": [
+              "apps/apps/proxy-server/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/apps/proxy-server/src/environments/environment.ts",
+                  "with": "apps/apps/proxy-server/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "apps-proxy-server:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/apps/proxy-server/tsconfig.app.json",
+              "apps/apps/proxy-server/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/apps/proxy-server/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/apps/proxy-server/jest.config.js",
+            "tsConfig": "apps/apps/proxy-server/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "proxy-server": {
+      "root": "apps/proxy-server",
+      "sourceRoot": "apps/proxy-server/src",
+      "projectType": "application",
+      "prefix": "proxy-server",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/proxy-server",
+            "main": "apps/proxy-server/src/main.ts",
+            "tsConfig": "apps/proxy-server/tsconfig.app.json",
+            "assets": [
+              "apps/proxy-server/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/proxy-server/src/environments/environment.ts",
+                  "with": "apps/proxy-server/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "proxy-server:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/proxy-server/tsconfig.app.json",
+              "apps/proxy-server/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/proxy-server/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/proxy-server/jest.config.js",
+            "tsConfig": "apps/proxy-server/tsconfig.spec.json"
+          }
+        }
+      }
     }
   },
   "cli": {
