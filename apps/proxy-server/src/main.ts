@@ -1,10 +1,10 @@
-'use strict';
+import * as Hapi from '@hapi/hapi';
+import * as axios from 'axios';
+import { environment } from './environments/environment';
 
-const Hapi = require('@hapi/hapi');
-const axios = require('axios');
+const booksURL = environment.urlLinks.googleBooksFetch.replace('##', environment.googleAPIKey);
 
 const init = async () => {
-
     const server = Hapi.server({
         port: 3000,
         host: 'localhost'
@@ -13,25 +13,24 @@ const init = async () => {
     server.route({
         config: {
             cors: {
-                origin: ['*'],
-                additionalHeaders: ['cache-control', 'x-requested-with']
+                origin: ['http://localhost:4200']
             }
         },
         method: 'GET',
         path: '/bookdetails/{requestKey}',
-        handler: async (request, h) => {
-            let response;
+        handler: async (request: any, h: any) => {
+            let response: any;
 
-            await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${request.params.requestKey}&key=AIzaSyCp0eK9W8R_LmhNx8baXA6mfdNy12FKFU0`)
-            .then(result => {
+            await axios.get(booksURL.replace('#', request.params.requestKey))
+            .then((result: any) => {
                 response = result;
             })
-            .catch(error => {
+            .catch((error: any) => {
                 return 'error in fetching data';
             });
 
             if( response && response.data && response.data.items ){
-                return response.data.items.map( ( obj ) => {
+                return response.data.items.map( ( obj: { id: any; volumeInfo: { authors: any; imageLinks: { thumbnail: any; }; publisher: any; title: any; description: any; }; saleInfo: { retailPrice: { currencyCode: any; amount: any; }; }; } ) => {
                             return {
                                         id: obj.id,
                                         authors: obj.volumeInfo.authors,
@@ -42,7 +41,7 @@ const init = async () => {
                                         title: obj.volumeInfo.title,
                                         description: obj.volumeInfo.description
                                     };
-                        }).filter( ( bookDetails ) => {
+                        }).filter( ( bookDetails: { price: number; } ) => {
                             if( bookDetails.price > 0 )
                                 return true;
                         });
@@ -56,7 +55,6 @@ const init = async () => {
 };
 
 process.on('unhandledRejection', (err) => {
-
     console.log(err);
     process.exit(1);
 });
