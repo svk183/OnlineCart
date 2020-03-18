@@ -15,7 +15,7 @@ export interface CartState extends EntityState<Book> {};
 // Initial State
 const initialState: CartState = cartAdapter.getInitialState();
 
-export function cartReducer(state = initialState, action: CartAction) {
+export function cartReducer(state = initialState, action: CartAction): CartState {
   switch (action.type) {
     case CartActionTypes.Add:
       return cartAdapter.addOne(action.bookObj, state);

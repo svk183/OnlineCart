@@ -1,9 +1,11 @@
 // Dev Defined actions
 import { AddressAction, AddressActionTypes } from '../actions/address.actions';
 
+import { Address } from '../../models/address';
+
 const initialState = [];
 
-export function AddressReducer( state = initialState, action: AddressAction ) {
+export function AddressReducer( state = initialState, action: AddressAction ): Address[] {
     switch( action.type ) {
         case AddressActionTypes.Add:
             return [...state, action.address ];

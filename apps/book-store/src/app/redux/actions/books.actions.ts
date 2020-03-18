@@ -12,7 +12,7 @@ export enum BooksActionTypes {
 
 export class BooksAction implements Action {
     readonly type: string;
-    payload: any;
+    payload: Book[] | string;
 }
 
 export class ChangeBooks implements BooksAction {

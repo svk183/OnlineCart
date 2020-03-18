@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  getStoreRef(){
+  getStoreRef(): Store<{ booksList: Book[], apiError: any, cartList: any, searchList: string[]}> {
     return this.store;
   }
 

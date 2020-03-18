@@ -10,7 +10,7 @@ export enum AddressActionTypes {
 } 
 
 export class AddressAction implements Action {
-    readonly type;
+    readonly type: string;
     address: Address;
 }
 

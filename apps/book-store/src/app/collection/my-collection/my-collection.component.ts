@@ -4,6 +4,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 // Redux related imports
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+
 import { selectAllCollectionItems } from '../../redux/reducers/mycollection.reducer';
 
 // Dev Models
@@ -30,7 +31,7 @@ export class MyCollectionComponent implements OnInit, OnDestroy {
     });
   }
 
-  getStoreRef() {
+  getStoreRef(): Store<{CollectionState}> {
     return this.store;
   }
 
@@ -40,5 +41,4 @@ export class MyCollectionComponent implements OnInit, OnDestroy {
       this.collectionSub.unsubscribe();
     }
   }
-
 }

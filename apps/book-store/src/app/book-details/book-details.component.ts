@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 // Redux Modules/Imports
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+
 import { AddBookToCartAction, RemoveBookFromCartAction } from '../redux/actions/cart.actions';
 import { selectCollectionIds } from '../redux/reducers/mycollection.reducer';
 
@@ -124,7 +125,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  getStoreRef(){
+  getStoreRef(): Store<{ booksList: Book[], cartList: any  }>{
     return this.store;
   }
 

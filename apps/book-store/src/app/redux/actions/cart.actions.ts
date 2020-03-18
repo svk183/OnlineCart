@@ -13,7 +13,7 @@ export enum CartActionTypes {
 }
 
 export class CartAction implements Action {
-    readonly type;
+    readonly type: string;
     bookObj?: Book;
     booksObj?: Book[];
     id?: string;

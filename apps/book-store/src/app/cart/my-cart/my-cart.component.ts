@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material';
 // Redux related imports
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
+
 import { RemoveBookFromCartAction, RemoveAllBooksFromCartAction } from '../../redux/actions/cart.actions';
 import { selectAllCartItems } from '../../redux/reducers/cart.reducer';
 import { AddMultipleToCollectionAction } from '../../redux/actions/mycollection.actions';
@@ -132,7 +133,7 @@ export class MyCartComponent implements OnInit, OnDestroy {
     }
   }
 
-  getStoreObj() {
+  getStoreObj(): Store<{CartState, CollectionState, addressList: Address[]}> {
     return this.store;
   }
 

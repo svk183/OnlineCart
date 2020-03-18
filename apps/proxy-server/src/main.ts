@@ -3,6 +3,11 @@ import * as axios from 'axios';
 import { environment } from './environments/environment';
 
 const booksURL = environment.urlLinks.googleBooksFetch.replace('##', environment.googleAPIKey);
+const corsConfig = {
+                        cors: {
+                            origin: ['http://localhost:4200']
+                        }
+                    };
 
 const init = async () => {
     const server = Hapi.server({
@@ -11,11 +16,7 @@ const init = async () => {
     });
 
     server.route({
-        config: {
-            cors: {
-                origin: ['http://localhost:4200']
-            }
-        },
+        config: corsConfig,
         method: 'GET',
         path: '/bookdetails/{requestKey}',
         handler: async (request: any, h: any) => {

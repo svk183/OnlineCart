@@ -12,7 +12,7 @@ export enum MyCollectionActionTypes {
 }
 
 export class MyCollectionAction implements Action {
-    readonly type;
+    readonly type: string;
     newBook?: Book;
     multipleBooks?: Book[];
     id?: string;

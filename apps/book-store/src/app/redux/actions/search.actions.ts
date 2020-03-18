@@ -7,8 +7,8 @@ export enum SearchActionTypes {
 }
 
 export class SearchAction implements Action {
-    readonly type;
-    newSearch?: any;
+    readonly type: string;
+    newSearch?: string;
 }
 
 export class AddToSearchListAction implements SearchAction {

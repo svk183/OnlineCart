@@ -5,7 +5,7 @@ export enum ErrorEnums {
 }
 
 export class ErrorAction implements Action {
-    readonly type;
+    readonly type: string;
     payload: any;
 }
 

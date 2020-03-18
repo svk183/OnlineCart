@@ -20,7 +20,7 @@ export const initialState: CollectionState = collectionAdapter.getInitialState()
 export function MyCollectionReducer(
   state = initialState,
   action: MyCollectionAction
-) {
+): CollectionState {
   switch (action.type) {
     case MyCollectionActionTypes.Add:
       return collectionAdapter.addOne(action.newBook, state);
